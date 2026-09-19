@@ -1,46 +1,118 @@
-LangChain Learning --- RAG Chatbot
+# 🚀 LangChain Learning — RAG Chatbot
 
-A practical learning project for understanding LangChain, embeddings,
-vector stores, retrievers, RAG, Gemini, Chroma, and FastAPI.
+> **A practical LangChain project built with Google Gemini, Chroma, and FastAPI.**
 
-What We Built
+[![Python](https://img.shields.io/badge/Python-3.13-blue?logo=python&logoColor=white)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-API-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![LangChain](https://img.shields.io/badge/LangChain-RAG-purple?logo=chainlink&logoColor=white)](https://www.langchain.com/)
+[![Google Gemini](https://img.shields.io/badge/Google-Gemini-4285F4?logo=google&logoColor=white)](https://ai.google.dev/)
+[![Chroma](https://img.shields.io/badge/Chroma-Vector%20Store-orange)](https://www.trychroma.com/)
+[![License](https://img.shields.io/badge/License-Learning%20Project-green)](#)
 
-This project is a Retrieval-Augmented Generation (RAG) chatbot.
+---
 
-Instead of:
+## 🧠 About This Project
 
+This project is a hands-on implementation of a **Retrieval-Augmented Generation (RAG)** chatbot.
+
+Instead of sending a question directly to an LLM, the application first searches a custom knowledge base, retrieves the most relevant information, and then provides that context to Google Gemini.
+
+### The basic idea
+
+```text
 User Question
-     ↓
-Gemini
-     ↓
-Answer
-
-we built:
-
-User Question
-     ↓
-FastAPI
-     ↓
-Retriever
-     ↓
+      ↓
+   Retriever
+      ↓
 Chroma Vector Store
-     ↓
-Relevant Knowledge Chunks
-     ↓
+      ↓
+Relevant Knowledge
+      ↓
 Prompt + Context
-     ↓
-Gemini
-     ↓
-Answer
+      ↓
+Google Gemini
+      ↓
+Final Answer
 
-The application retrieves relevant information from local Markdown files
-before asking Gemini to generate the final answer.
+The knowledge base currently contains Markdown files about:
 
-Project Structure
+🐍 Python
+⚡ FastAPI
+🔗 LangChain
+✨ Key Features
+📚 Markdown-based knowledge base
+📄 Document loading with LangChain
+✂️ Recursive text splitting
+🧮 Semantic embeddings
+🗄️ Chroma vector store
+🔎 Similarity search
+🎯 LangChain Retriever
+🤖 Google Gemini integration
+🧠 Retrieval-Augmented Generation
+🚀 FastAPI REST API
+📝 Pydantic request validation
+🔐 Environment-variable based API key
+📖 Swagger/OpenAPI documentation
+🏗️ Architecture
+                    KNOWLEDGE INGESTION
 
+   python.md
+   fastapi.md
+   langchain.md
+       │
+       ▼
+┌───────────────────┐
+│  Document Loader  │
+└─────────┬─────────┘
+          ↓
+┌───────────────────┐
+│   Text Splitter   │
+└─────────┬─────────┘
+          ↓
+       Chunks
+          ↓
+┌───────────────────┐
+│ Gemini Embeddings │
+└─────────┬─────────┘
+          ↓
+      Vectors
+          ↓
+┌───────────────────┐
+│ Chroma Vector DB  │
+└───────────────────┘
+
+
+                    QUERY / RAG
+
+User Question
+      │
+      ▼
+┌──────────────┐
+│   FastAPI    │
+└──────┬───────┘
+       ↓
+┌──────────────┐
+│  Retriever   │
+└──────┬───────┘
+       ↓
+┌──────────────┐
+│    Chroma    │
+└──────┬───────┘
+       ↓
+Relevant Chunks
+       ↓
+    Context
+       ↓
+┌──────────────┐
+│    Gemini    │
+└──────┬───────┘
+       ↓
+   Final Answer
+🧩 Project Structure
 lang-chain-learning/
 │
 ├── app/
+│   │
 │   ├── knowledge/
 │   │   ├── python.md
 │   │   ├── fastapi.md
@@ -58,83 +130,36 @@ lang-chain-learning/
 ├── chroma_db/
 ├── .env
 ├── .gitignore
-├── README.md
-└── venv/
+└── README.md
+🛠️ Technologies
+Technology	Purpose
+🐍 Python	Application language
+⚡ FastAPI	REST API
+🔗 LangChain	LLM application framework
+🤖 Google Gemini	LLM + embeddings
+🗄️ Chroma	Vector store
+📦 Pydantic	Data validation
+📝 Markdown	Knowledge source
+🚀 Uvicorn	ASGI server
+📚 Core Concepts
+🔗 LangChain
 
-Technologies
+LangChain is a framework for building applications powered by Large Language Models.
 
-Technology          Purpose
+It provides reusable components for:
 
-Python              Main programming language
-FastAPI             API framework
-LangChain           LLM application framework
-Google Gemini       LLM used to generate answers
-Gemini Embeddings   Converts text into vectors
-Chroma              Local vector store
-Pydantic            Request validation
-Markdown            Knowledge-base format
-Uvicorn             ASGI server
-python-dotenv       Environment variables
+Models
+Prompts
+Documents
+Text splitters
+Embeddings
+Vector stores
+Retrievers
+Tools
+Agents
+📄 Document Loader
 
-Core Concepts
-
-1. LangChain
-
-LangChain is a framework for building applications powered by Large
-Language Models.
-
-It provides components for connecting:
-
-LLMs
-
-prompts
-
-documents
-
-text splitters
-
-embeddings
-
-vector stores
-
-retrievers
-
-tools
-
-agents
-
-workflows
-
-In this project, LangChain connects Gemini, document processing,
-embeddings, Chroma, and retrieval.
-
-2. LLM
-
-LLM means Large Language Model.
-
-An LLM is an AI model trained on large amounts of text and capable of
-understanding and generating natural language.
-
-We use Google Gemini as our LLM:
-
-from langchain_google_genai import ChatGoogleGenerativeAI
-
-llm = ChatGoogleGenerativeAI(
-    model="gemini-3.8-flash"
-)
-
-The LLM generates the final natural-language answer.
-
-3. Document Loader
-
-Our knowledge is stored in Markdown files:
-
-app/knowledge/
-├── python.md
-├── fastapi.md
-└── langchain.md
-
-We load them with LangChain:
+A document loader reads external data and converts it into LangChain Document objects.
 
 loader = DirectoryLoader(
     "app/knowledge",
@@ -144,53 +169,31 @@ loader = DirectoryLoader(
 
 documents = loader.load()
 
-The result is a list of LangChain Document objects.
-
-A Document contains mainly:
+A Document contains:
 
 document.page_content
 document.metadata
+✂️ Text Splitter
 
-Example:
-
-page_content:
-"FastAPI is a modern Python web framework..."
-
-metadata:
-{"source": "app/knowledge/fastapi.md"}
-
-4. Text Splitting
-
-Large documents are divided into smaller pieces called chunks.
-
-We use:
+Large documents are divided into smaller chunks.
 
 RecursiveCharacterTextSplitter(
     chunk_size=200,
     chunk_overlap=50,
 )
-
 chunk_size
 
-Controls the approximate target size of each chunk.
+Controls the approximate size of each chunk.
 
 chunk_overlap
 
-Keeps some text from the previous chunk in the next chunk.
+Keeps some content from the previous chunk in the next chunk.
 
-This helps preserve context between chunks.
+This helps preserve context.
 
-Original Document
-       ↓
-Chunk 1
-Chunk 2
-Chunk 3
-...
+🧮 Embeddings
 
-5. Embeddings
-
-An embedding is a numerical representation of text that captures
-semantic meaning.
+An embedding converts text into a numerical vector representing its semantic meaning.
 
 "What is FastAPI?"
         ↓
@@ -198,148 +201,46 @@ Embedding Model
         ↓
 [0.12, -0.03, 0.44, ...]
 
-The list of numbers is a vector.
-
 We use:
 
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
-
-embeddings = GoogleGenerativeAIEmbeddings(
+GoogleGenerativeAIEmbeddings(
     model="gemini-embedding-2"
 )
-
-The embedding model is different from the LLM:
-
+Important distinction
 Embedding Model
-→ converts text into vectors
+      ↓
+Converts text → vectors
 
 LLM
-→ generates text
+      ↓
+Generates text → answers
+🗄️ Vector Store
 
-6. embed_query() vs embed_documents()
+A vector store stores embeddings and associated documents and allows semantic similarity search.
 
-embed_query()
-
-Used for a single query:
-
-vector = embeddings.embed_query(
-    "What is FastAPI?"
-)
-
-Question
-   ↓
-Query Vector
-
-embed_documents()
-
-Used for multiple documents:
-
-vectors = embeddings.embed_documents(
-    [
-        "FastAPI is a Python framework.",
-        "Python is a programming language.",
-    ]
-)
-
-Document 1 → Vector 1
-Document 2 → Vector 2
-
-7. Vector
-
-A vector is a list of numerical values representing an embedding.
-
-Our current embedding output has:
-
-3072 dimensions
-
-The numbers are used to compare semantic similarity.
-
-8. Vector Store
-
-A vector store stores vectors together with their associated documents
-and metadata and provides similarity-search functionality.
-
-We use Chroma:
-
-from langchain_chroma import Chroma
-
-During ingestion:
+This project uses Chroma.
 
 vector_store = Chroma.from_documents(
     documents=chunks,
     embedding=embeddings,
     persist_directory="./chroma_db",
 )
+🔎 Similarity Search
 
-General flow:
-
-Chunks
-   ↓
-Embedding Model
-   ↓
-Vectors
-   ↓
-Chroma
-
-The local vector store is stored in:
-
-chroma_db/
-
-9. Why We Persist Chroma
-
-We don't want to recreate embeddings every time the API starts.
-
-Ingestion/build step
-
-Markdown files
-      ↓
-Chunks
-      ↓
-Embeddings
-      ↓
-Chroma
-      ↓
-chroma_db/
-
-Query time
-
-Application starts
-       ↓
-Load existing Chroma
-       ↓
-Ready for retrieval
-
-This avoids unnecessarily regenerating embeddings on every startup.
-
-10. Similarity Search
-
-Similarity search finds documents whose embeddings are semantically
-close to the query embedding.
+Similarity search finds the chunks that are semantically closest to the user's question.
 
 results = vector_store.similarity_search(
     "What is FastAPI?",
     k=2,
 )
 
-k=2 means return the two most relevant chunks.
+k=2 means:
 
-Conceptually:
+Return the 2 most relevant chunks.
 
-"What is FastAPI?"
-        ↓
-Query Embedding
-        ↓
-Compare with stored vectors
-        ↓
-Find similar vectors
-        ↓
-Return relevant chunks
+🎯 Retriever
 
-11. Retriever
-
-A Retriever retrieves relevant documents for a query.
-
-We convert the Chroma vector store into a Retriever:
+A Retriever is responsible for retrieving relevant documents for a query.
 
 retriever = vector_store.as_retriever(
     search_kwargs={"k": 2}
@@ -347,369 +248,160 @@ retriever = vector_store.as_retriever(
 
 Then:
 
-documents = retriever.invoke(
-    question
-)
+documents = retriever.invoke(question)
 
-The Retriever returns LangChain Document objects.
-
-Vector Store vs Retriever
-
-Vector Store
-
-Stores vectors
-
-Stores documents
-
-Performs similarity search
-
-Retriever
-
-Provides a standard retrieval interface
-
-Relationship:
+The relationship is:
 
 Chroma Vector Store
         ↓
    as_retriever()
         ↓
      Retriever
+🧠 RAG
 
-12. RAG
+RAG = Retrieval-Augmented Generation
 
-RAG means:
+RAG combines:
 
-Retrieval-Augmented Generation
+Retrieval
+    +
+Generation
 
-The process is:
+Our process:
 
-Receive a question.
-
-Retrieve relevant external information.
-
-Put that information into the prompt.
-
-Send the prompt to the LLM.
-
-Generate the answer.
-
-Our flow:
-
-User Question
-      ↓
+1. User asks a question
+2. Retriever searches Chroma
+3. Relevant chunks are returned
+4. Chunks become context
+5. Context is added to the prompt
+6. Gemini receives the prompt
+7. Gemini generates the answer
+🔄 Complete RAG Flow
+Question
+   ↓
+Query Embedding
+   ↓
 Retriever
-      ↓
-Relevant Chunks
-      ↓
-Context
-      ↓
-Prompt
-      ↓
-Gemini
-      ↓
-Generated Answer
-
-13. Context
-
-Retrieved documents are combined into a context string:
-
-context = "\n\n".join(
-    document.page_content
-    for document in documents
-)
-
-The context is then supplied to Gemini.
-
-14. Prompt
-
-Our RAG prompt tells Gemini to use the retrieved context:
-
-prompt = f"""
-Answer the question using only the context below.
-
-Context:
-{context}
-
-Question:
-{question}
-
-If the answer is not present in the context,
-say "I don't know based on the provided knowledge."
-"""
-
-The important idea is:
-
-Question + Retrieved Context
-             ↓
-           Gemini
-
-15. rag_service.py
-
-The main RAG logic is:
-
-def ask_rag(question: str) -> str:
-
-    documents = retriever.invoke(question)
-
-    context = "\n\n".join(
-        document.page_content
-        for document in documents
-    )
-
-    prompt = f"""
-Answer the question using only the context below.
-
-Context:
-{context}
-
-Question:
-{question}
-
-If the answer is not present in the context,
-say "I don't know based on the provided knowledge."
-"""
-
-    response = llm.invoke(prompt)
-
-    return response.text
-
-This connects:
-
-Retriever
-    ↓
-Context
-    ↓
-Prompt
-    ↓
-LLM
-
-16. FastAPI
-
-FastAPI exposes the RAG system through an HTTP API.
-
-Endpoint:
-
-POST /chat
-
-Request:
-
-{
-    "message": "What is FastAPI?"
-}
-
-Response:
-
-{
-    "answer": "FastAPI is a modern Python web framework for building APIs..."
-}
-
-17. Pydantic Schema
-
-We use Pydantic to validate the incoming request:
-
-class ChatRequest(BaseModel):
-    message: str
-
-FastAPI therefore expects:
-
-{
-    "message": "What is FastAPI?"
-}
-
-18. FastAPI Endpoint
-
-@app.post("/chat")
-def chat(request: ChatRequest):
-    answer = ask_rag(request.message)
-
-    return {
-        "answer": answer
-    }
-
-Flow:
-
-HTTP Request
-     ↓
-FastAPI
-     ↓
-Pydantic Validation
-     ↓
-ChatRequest
-     ↓
-ask_rag()
-     ↓
-Retriever
-     ↓
+   ↓
 Chroma
-     ↓
-Context
-     ↓
-Gemini
-     ↓
-HTTP Response
-
-19. Complete Architecture
-
-Knowledge ingestion
-
-python.md ───────┐
-fastapi.md ──────┼──→ Document Loader
-langchain.md ────┘
-                         ↓
-                    Documents
-                         ↓
-                    Text Splitter
-                         ↓
-                       Chunks
-                         ↓
-                  Gemini Embeddings
-                         ↓
-                       Vectors
-                         ↓
-                       Chroma
-                         ↓
-                    chroma_db/
-
-Query / RAG
-
-User
-  │
-  │ POST /chat
-  ↓
-FastAPI
-  ↓
-Pydantic
-  ↓
-ask_rag()
-  ↓
-Retriever
-  ↓
-Chroma
-  ↓
+   ↓
 Relevant Chunks
-  ↓
+   ↓
 Context
-  ↓
+   ↓
 Prompt
-  ↓
-Gemini LLM
-  ↓
+   ↓
+Gemini
+   ↓
 Answer
-  ↓
-FastAPI Response
+🚀 Quick Start
+1. Clone the repository
+git clone https://github.com/sreenandpk/langchain-learning.git
+cd langchain-learning
+2. Create virtual environment
+Windows
+python -m venv venv
+.\venv\Scripts\Activate.ps1
+Linux/macOS
+python3 -m venv venv
+source venv/bin/activate
+3. Install dependencies
+pip install langchain langchain-community langchain-google-genai langchain-chroma langchain-text-splitters fastapi uvicorn python-dotenv
+4. Configure API Key
 
-20. Ingestion vs Query Time
+Create .env in the project root:
 
-This distinction is important.
+GOOGLE_API_KEY=your_google_api_key
 
-Ingestion time
+Never commit .env to GitHub.
 
-Run when knowledge files are added or changed:
+5. Build the Vector Store
+
+Run:
 
 python app/services/embedding_service.py
 
-Flow:
+This performs:
 
-Files
- ↓
-Load
- ↓
-Split
- ↓
-Embed
- ↓
-Store in Chroma
-
-Query time
-
-Run the API:
-
-uvicorn app.main:app --reload
-
-Flow:
-
-Question
- ↓
-Retriever
- ↓
+Markdown Files
+      ↓
+Documents
+      ↓
+Chunks
+      ↓
+Embeddings
+      ↓
 Chroma
- ↓
-Relevant chunks
- ↓
-Gemini
- ↓
-Answer
 
-21. Why Use LangChain?
+Run this again whenever the knowledge files are changed.
 
-Without LangChain, we could manually implement:
+6. Start FastAPI
+uvicorn app.main:app --reload
+7. Open Swagger
 
-Read files
- ↓
-Call embedding API
- ↓
-Store vectors
- ↓
-Calculate similarity
- ↓
-Retrieve text
- ↓
-Build prompt
- ↓
-Call Gemini
+Visit:
 
-LangChain provides reusable abstractions for:
+http://127.0.0.1:8000/docs
+💬 Example Request
+Endpoint
+POST /chat
+Request
+{
+    "message": "What is FastAPI?"
+}
+Response
+{
+    "answer": "FastAPI is a modern Python web framework for building APIs..."
+}
+💡 Example Questions
 
-Document
-Text Splitter
-Embedding
-Vector Store
-Retriever
-Prompt
-LLM
+Try asking:
 
-This makes it easier to build and change LLM applications.
+What is Python?
+What is FastAPI?
+What is LangChain?
+Which Python frameworks are mentioned?
+What is an embedding?
+🧪 Learning Journey
 
-22. Important Interview Definitions
+This project covers:
 
+✅ LangChain
+✅ Gemini LLM
+✅ Document Loaders
+✅ Documents
+✅ Text Splitting
+✅ Chunking
+✅ Embeddings
+✅ Vectors
+✅ Chroma
+✅ Similarity Search
+✅ Retrievers
+✅ Context
+✅ Prompt Engineering
+✅ RAG
+✅ FastAPI
+✅ Pydantic
+🎯 Important Interview Definitions
 LangChain
 
-A framework for building applications powered by LLMs by connecting
-models, prompts, documents, retrieval, tools, and workflows.
-
-Document Loader
-
-Loads external data into LangChain Document objects.
-
-Document
-
-A piece of content containing page_content and metadata.
-
-Text Splitter
-
-Splits large documents into smaller chunks.
+A framework for building LLM-powered applications by connecting models, prompts, documents, retrieval systems, tools, and workflows.
 
 Embedding
 
-A numerical representation of text that captures semantic information.
-
-Vector
-
-A list of numerical values representing an embedding.
+A numerical representation of text that captures semantic meaning.
 
 Vector Store
 
-Stores embeddings and associated documents and supports similarity
-search.
+A system that stores embeddings and supports similarity-based retrieval.
 
 Retriever
 
-Retrieves relevant documents for a query.
+A component that retrieves relevant documents for a given query.
 
 RAG
 
-Retrieves relevant external information and provides it to an LLM before
-generating an answer.
+A technique that retrieves relevant external information and provides it to an LLM before generating an answer.
 
 LLM
 
@@ -717,23 +409,15 @@ A Large Language Model that understands and generates natural language.
 
 Chroma
 
-A vector store/database used to store and search embeddings locally.
+A vector store used to store and search embeddings.
 
-23. Environment Variables
+🔐 Security
 
-The Gemini API key is stored in .env:
+The API key is stored in:
 
-GOOGLE_API_KEY=your_api_key
+.env
 
-Load it with:
-
-from dotenv import load_dotenv
-
-load_dotenv()
-
-Never commit the real .env file to Git.
-
-.gitignore:
+The following should be ignored by Git:
 
 .env
 venv/
@@ -741,97 +425,47 @@ __pycache__/
 *.pyc
 chroma_db/
 
-24. Running the Project
+Never commit your Gemini API key.
 
-Activate the virtual environment:
+📈 Future Improvements
 
-.\venv\Scripts\Activate.ps1
+Possible next steps:
 
-Build/update the vector store when knowledge changes:
+💬 Conversation memory
+🧠 Better prompt templates
+📊 Retrieval evaluation
+🔍 Metadata filtering
+📄 PDF document loading
+🌐 Web document loading
+🗃️ PostgreSQL + pgvector
+⚡ Streaming responses
+🔐 Authentication
+🧪 RAG testing
+📈 Observability
+🤖 LangChain tools
+🧩 Agents
+🚀 Production deployment
+⭐ Learning Goal
 
-python app/services/embedding_service.py
+The goal of this repository is not just to build a chatbot.
 
-Start FastAPI:
-
-uvicorn app.main:app --reload
-
-Open Swagger:
-
-http://127.0.0.1:8000/docs
-
-Test:
-
-{
-    "message": "What is FastAPI?"
-}
-
-25. Example Questions
-
-What is FastAPI?
-
-What is Python?
-
-What is LangChain?
-
-What Python frameworks are mentioned in the knowledge base?
-
-For information outside the knowledge base, the application is
-instructed to respond:
-
-I don't know based on the provided knowledge.
-
-26. What We Learned
-
-This project covered the fundamental LangChain RAG pipeline:
-
-LangChain
-
-Document Loaders
+It is to understand how modern LLM applications are built:
 
 Documents
-
-Text Splitting
-
-Chunks
-
+    ↓
+Chunking
+    ↓
 Embeddings
-
-Vectors
-
-Vector Stores
-
-Chroma
-
-Similarity Search
-
-Retrievers
-
+    ↓
+Vector Database
+    ↓
+Retrieval
+    ↓
 Context
-
-Prompts
-
-LLMs
-
-RAG
-
-FastAPI integration
-
-Pydantic request validation
-
-Core concept
-
-Knowledge
-   ↓
-Chunks
-   ↓
-Embeddings
-   ↓
-Vector Store
-   ↓
-Retriever
-   ↓
-Relevant Context
-   ↓
+    ↓
 LLM
-   ↓
-Answer
+    ↓
+Application
+🚀 Learn. Build. Improve. Repeat.
+
+If this project helped you understand RAG and LangChain, consider giving the repository a ⭐.
