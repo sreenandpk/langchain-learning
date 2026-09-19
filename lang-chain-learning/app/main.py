@@ -1,9 +1,11 @@
 from fastapi import FastAPI
 
 from app.schemas import ChatRequest
-from app.services.llm_service import ask_llm
+from app.services.rag_service import ask_rag
 
-app = FastAPI(title="LangChain Learning API")
+app = FastAPI(
+    title="LangChain Learning API",
+)
 
 
 @app.get("/")
@@ -13,6 +15,6 @@ def root():
 
 @app.post("/chat")
 def chat(request: ChatRequest):
-    answer = ask_llm(request.message)
+    answer = ask_rag(request.message)
 
     return {"answer": answer}
